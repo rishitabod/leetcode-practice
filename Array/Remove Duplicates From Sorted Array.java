@@ -5,7 +5,7 @@ class Solution {
     public int removeDuplicates(int[] nums) {
         if (nums.length == 0) return 0;
 
-        int k = 1; // index for unique elements
+        int k = 1; 
 
         for (int i = 1; i < nums.length; i++) {
             if (nums[i] != nums[i - 1]) {
@@ -26,7 +26,7 @@ class Solution {
             numbers[i] = sc.nextInt();
         }
 
-        Solution obj = new Solution(); // IMPORTANT
+        Solution obj = new Solution(); 
         int k = obj.removeDuplicates(numbers);
 
         System.out.println("k = " + k);
