@@ -1,0 +1,37 @@
+class Solution {
+    public int daysCapacity(int[] weights, int mid) {
+        int day = 1;
+        int cap = 0;
+
+        for (int i = 0; i < weights.length; i++) {
+            if (cap + weights[i] > mid) {
+                day++;
+                cap = 0;
+            }
+            cap += weights[i];
+        }
+        return day;
+    }
+
+    public int shipWithinDays(int[] weights, int days) {
+        int low = 0, sum = 0;
+
+        for (int num : weights) {
+            low = Math.max(low, num);
+            sum += num;
+        }
+
+        int high = sum;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (daysCapacity(weights, mid) <= days) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return low;
+    }
+}
