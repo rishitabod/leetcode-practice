@@ -22,7 +22,8 @@ class Solution {
                 if (intervals[j][0] <= end) {
                     end = Math.max(end, intervals[j][1]);
                     visited[j] = true;
-                } 
+                }else{
+                    break;
             }
             
             visited[i] = true;
