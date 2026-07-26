@@ -1,0 +1,47 @@
+/*
+class Node {
+    int data;
+    Node next;
+
+    Node(int d)
+    {
+        data = d;
+        next = null;
+    }
+}*/
+
+class Solution {
+    public Node segregate(Node head) {
+        if(head == null || head.next == null){
+            return head;
+        }
+
+        Node dummy0 = new Node(-1);
+        Node dummy1 = new Node(-1);
+        Node dummy2 = new Node(-1);
+        Node head0 = dummy0;
+        Node head1 = dummy1;
+        Node head2 = dummy2;
+        Node temp = head;
+
+        while(temp != null){
+            if(temp.data == 0){
+                head0.next = temp;
+                head0 = head0.next;
+            } else if(temp.data == 1){
+                head1.next = temp;
+                head1 = head1.next;
+            } else {
+                head2.next = temp;
+                head2 = head2.next;
+            }
+            temp = temp.next;
+        }
+
+        head2.next = null;             
+        head1.next = dummy2.next;        
+        head0.next = dummy1.next;        
+
+        return dummy0.next;              
+    }
+}
