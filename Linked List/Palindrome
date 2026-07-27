@@ -16,3 +16,44 @@ class Solution {
         return true;
     }
 }
+//Optimal : fast-slow approach to find the middle of list
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        ListNode secondHalfHead = reverse(slow.next);
+
+        ListNode temp = head;
+        ListNode temprev = secondHalfHead;
+        boolean result = true;
+        while(temprev != null){
+            if(temp.val != temprev.val){
+                result = false;
+                break;
+            }
+            temp = temp.next;
+            temprev = temprev.next;
+        }
+
+        slow.next = reverse(secondHalfHead);
+
+        return result;
+    }
+
+    private ListNode reverse(ListNode head){
+        ListNode prev = null;
+        ListNode curr = head;
+        while(curr != null){
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+}
