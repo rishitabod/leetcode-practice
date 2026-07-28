@@ -15,3 +15,29 @@ class Solution {
         return 0;
     }
 }
+//
+class Solution {
+    public int lengthOfLoop(Node head) {
+        
+        Node fast = head;
+        Node slow = head;
+        while(fast != null && fast.next != null){
+            
+            
+            
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast) return len(slow,fast);
+        }
+        return 0;
+    }
+    public int len(Node slow, Node fast){
+    int timer = 1;
+    fast = fast.next;
+    while(slow != fast){
+        fast = fast.next;
+        timer++;
+    }
+    return timer;
+}
+}
