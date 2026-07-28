@@ -1,0 +1,14 @@
+class Solution {
+    public boolean detectLoop(Node head) {
+        HashSet<Node> visited = new HashSet<>();
+        Node temp = head;
+        while(temp != null){
+            if(visited.contains(temp)){
+                return true;
+            }
+            visited.add(temp);
+            temp = temp.next;
+        }
+        return false;
+    }
+}
