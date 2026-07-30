@@ -1,5 +1,21 @@
 public class Solution {
     public ListNode detectCycle(ListNode head) {
+        HashSet<ListNode> cycle = new HashSet<>();
+        ListNode temp = head;
+        if(head == null || head.next == null){
+            return null;
+        }
+        while(temp != null){
+            if(cycle.contains(temp)) return temp;
+            cycle.add(temp);
+            temp = temp.next;
+        }
+        return null;
+    }
+}
+// optimal
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
         if(head == null || head.next == null){
             return null;
         }
