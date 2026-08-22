@@ -1,0 +1,108 @@
+class Solution {
+    class Job {
+        int deadline, profit, index;
+        Job(int deadline, int profit, int index){
+            this.deadline = deadline;
+            this.profit = profit;
+            this.index = index;
+        }
+    }
+    
+    public ArrayList<Integer> jobSequencing(int[] deadline, int[] profit) {
+        int n = deadline.length;
+        List<Job> jobs = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+            jobs.add(new Job(deadline[i], profit[i], i));
+        }
+        
+        jobs.sort((a, b) -> b.profit - a.profit);
+        
+        int maxDeadline = 0;
+        for(Job j : jobs){
+            maxDeadline = Math.max(maxDeadline, j.deadline);
+        }
+        
+        boolean[] slot = new boolean[maxDeadline + 1];
+        
+        int countJobs = 0;
+        int totalProfit = 0;
+        
+        for(Job j : jobs){
+            for(int t = j.deadline; t > 0; t--){
+                if(!slot[t]){
+                    slot[t] = true;
+                    countJobs++;
+                    totalProfit += j.profit;
+                    break;
+                }
+            }
+        }
+        
+        ArrayList<Integer> result = new ArrayList<>();
+        result.add(countJobs);
+        result.add(totalProfit);
+        return result;
+    }
+}
+
+//O(n × maxDeadline) for the slot search becomes too slow when maxDeadline is large fix it with the Disjoint Set Union (DSU) optimization
+
+import java.util.*;
+
+class Solution {
+    class Job {
+        int deadline, profit;
+        Job(int deadline, int profit){
+            this.deadline = deadline;
+            this.profit = profit;
+        }
+    }
+    
+    int[] parent;
+    
+    int find(int x){
+        if(parent[x] == x) return x;
+        return parent[x] = find(parent[x]); 
+    }
+    
+    void union(int x, int y){
+        parent[find(x)] = find(y);
+    }
+    
+    public ArrayList<Integer> jobSequencing(int[] deadline, int[] profit) {
+        int n = deadline.length;
+        List<Job> jobs = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+            jobs.add(new Job(deadline[i], profit[i]));
+        }
+        
+        jobs.sort((a, b) -> b.profit - a.profit);
+        
+        int maxDeadline = 0;
+        for(Job j : jobs){
+            maxDeadline = Math.max(maxDeadline, j.deadline);
+        }
+        
+        parent = new int[maxDeadline + 1];
+        for(int i = 0; i <= maxDeadline; i++){
+            parent[i] = i;
+        }
+        
+        int countJobs = 0;
+        int totalProfit = 0;
+        
+        for(Job j : jobs){
+            int availableSlot = find(j.deadline);
+            if(availableSlot > 0){
+                parent[availableSlot] = availableSlot - 1;
+                countJobs++;
+                totalProfit += j.profit;
+            }
+        }
+        
+        ArrayList<Integer> result = new ArrayList<>();
+        result.add(countJobs);
+        result.add(totalProfit);
+        return result;
+    }
+}
