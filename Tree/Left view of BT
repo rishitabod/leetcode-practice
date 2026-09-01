@@ -1,0 +1,40 @@
+class Solution {
+    class Pair{
+        Node node;
+        int row;
+        Pair(Node node,int row){
+            this.node = node;
+            this.row=row;
+        }
+    }
+    public ArrayList<Integer> leftView(Node root) {
+        // code here
+        ArrayList<Integer>ans = new ArrayList<>();
+        if(root == null){
+            return ans;
+        }
+        Map<Integer,Integer>map = new TreeMap<>();
+        Queue<Pair>q = new LinkedList<>();
+        
+        q.offer(new Pair(root,0));
+        while(!q.isEmpty()){
+            Pair curr = q.poll();
+            Node node = curr.node;
+            int row = curr.row;
+            
+            if(!map.containsKey(row)){
+                map.put(row,node.data);
+            }
+            if(node.left != null){
+                q.offer(new Pair(node.left,row+1));
+            }
+            if(node.right != null){
+                q.offer(new Pair(node.right,row+1));
+            }
+        }
+        for(int val : map.values()){
+            ans.add(val);
+        }
+        return ans;
+    }
+}
