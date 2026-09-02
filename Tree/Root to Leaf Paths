@@ -1,0 +1,37 @@
+class Solution {
+
+    private void path(Node root, ArrayList<Integer> curr,
+                       ArrayList<ArrayList<Integer>> ans) {
+
+        if (root == null) {
+            return;
+        }
+
+        curr.add(root.data);
+
+        if (root.left == null && root.right == null) {
+            ans.add(new ArrayList<>(curr));
+        }
+
+        path(root.left, curr, ans);
+
+        path(root.right, curr, ans);
+
+        curr.remove(curr.size() - 1);
+    }
+
+    public ArrayList<ArrayList<Integer>> paths(Node root) {
+
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+
+        if (root == null) {
+            return ans;
+        }
+
+        ArrayList<Integer> curr = new ArrayList<>();
+
+        path(root, curr, ans);
+
+        return ans;
+    }
+}
