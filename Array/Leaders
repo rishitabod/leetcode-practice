@@ -1,0 +1,24 @@
+class Solution {
+    static ArrayList<Integer> leaders(int arr[]) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        int n = arr.length;
+
+        int i = n - 1;
+        int j = n - 2;
+
+        ans.add(arr[n - 1]);
+
+        while(j >= 0) {
+            if(arr[j] >= arr[i]) {
+                ans.add(arr[j]);
+                i = j;
+                j--;
+            } else {
+                j--;
+            }
+        }
+
+        Collections.reverse(ans);
+        return ans;
+    }
+}
