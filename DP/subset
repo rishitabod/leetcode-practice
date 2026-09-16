@@ -1,0 +1,38 @@
+class Solution {
+
+    boolean set(int[] arr, Boolean[][] dp, int sum, int i) {
+
+        if (sum == 0) {
+            return true;
+        }
+
+        if (i == 0) {
+            return arr[0] == sum;
+        }
+
+        if (dp[i][sum] != null) {
+            return dp[i][sum];
+        }
+
+        boolean notTake = set(arr, dp, sum, i - 1);
+
+        boolean take = false;
+
+        if (arr[i] <= sum) {
+            take = set(arr, dp, sum - arr[i], i - 1);
+        }
+
+        return dp[i][sum] = (notTake || take);
+    }
+
+    static boolean isSubsetSum(int arr[], int sum) {
+
+        int n = arr.length;
+
+        Boolean[][] dp = new Boolean[n][sum + 1];
+
+        Solution obj = new Solution();
+
+        return obj.set(arr, dp, sum, n - 1);
+    }
+}
