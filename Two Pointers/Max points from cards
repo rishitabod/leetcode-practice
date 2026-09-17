@@ -1,0 +1,22 @@
+//leetcode : 1423
+class Solution {
+    public int maxScore(int[] cardPoints, int k) {
+        int n =cardPoints.length;
+        int score = 0;
+        for(int i=0;i<k;i++){
+            
+            score += cardPoints[i];
+        }
+        int left =k-1;
+        int right =n-1;
+        int Sum = score;
+        while(left >= 0){
+            Sum -= cardPoints[left];
+            Sum += cardPoints[right];
+            score = Math.max(score,Sum);
+            left--;
+            right--;
+        }
+        return score;
+    }
+}
