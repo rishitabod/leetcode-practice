@@ -1,0 +1,45 @@
+class Solution {
+    public int minDifference(int[] arr) {
+        int total = 0;
+
+        for (int num : arr) {
+            total += num;
+        }
+
+        int n = arr.length;
+        boolean[][] dp = new boolean[n][total + 1];
+
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = true;
+        }
+
+        if (arr[0] <= total) {
+            dp[0][arr[0]] = true;
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int target = 1; target <= total; target++) {
+
+                boolean notTake = dp[i - 1][target];
+
+                boolean take = false;
+                if (arr[i] <= target) {
+                    take = dp[i - 1][target - arr[i]];
+                }
+
+                dp[i][target] = take || notTake;
+            }
+        }
+
+        int minDiff = Integer.MAX_VALUE;
+
+        for (int s1 = 0; s1 <= total / 2; s1++) {
+            if (dp[n - 1][s1]) {
+                int s2 = total - s1;
+                minDiff = Math.min(minDiff, Math.abs(s2 - s1));
+            }
+        }
+
+        return minDiff;
+    }
+}
