@@ -1,0 +1,35 @@
+class Solution {
+    public int cutRod(int[] price) {
+        int n = price.length;
+
+        int[][] dp = new int[n][n + 1];
+
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        return solve(n - 1, n, price, dp);
+    }
+
+    private int solve(int i, int length, int[] price, int[][] dp) {
+
+        if (i == 0) {
+            return length * price[0];
+        }
+
+        if (dp[i][length] != -1) {
+            return dp[i][length];
+        }
+        
+        int notPick = solve(i - 1, length, price, dp);
+        
+        int pick = 0;
+        int pieceLength = i + 1;
+
+        if (pieceLength <= length) {
+            pick = price[i] + solve(i, length - pieceLength, price, dp);
+        }
+
+        return dp[i][length] = Math.max(pick, notPick);
+    }
+}
